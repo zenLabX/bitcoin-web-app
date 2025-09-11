@@ -3,9 +3,11 @@ import Pagination from "@/modules/home/pagination";
 import Image from "next/image";
 import PostList from "./post-list";
 
+// server component
 const Content = () => {
   return (
     <>
+      {/* 圖片組件 (next.js 內建) */}
       <Image
         src="/images/bitcoin-banner.jpeg"
         className="w-full rounded-lg border border-white/10"
