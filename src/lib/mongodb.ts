@@ -17,17 +17,17 @@ let clientPromise: Promise<MongoClient>; //MongoClient 連線的 Promise（連�
  * 所以把 _mongoClientPromise 放到 global，避免每次重新跑程式碼都建立新的連線。
  */
 declare global {
-    var _mongoClientPromise: Promise<MongoClient>;
+  var _mongoClientPromise: Promise<MongoClient>;
 }
 
 /** 單例模式 (設計模式)
  * 這裡檢查 _mongoClientPromise 是否已經存在：
  * 沒有的話：建立新的 MongoClient，並呼叫 .connect()，把結果存進 global._mongoClientPromise。
  * 已經有的話：直接用舊的，不會重複建立。
-*/
-if(!global._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    global._mongoClientPromise = client.connect();
+ */
+if (!global._mongoClientPromise) {
+  client = new MongoClient(uri, options);
+  global._mongoClientPromise = client.connect();
 }
 
 /**

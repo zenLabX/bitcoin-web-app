@@ -17,9 +17,9 @@ const PostList = () => {
   return (
     <div className="mt-8">
       {mockPosts.map((post: Post) => (
-          <Link key={post.id} href={`/post/${post.id}`}>
-            <Post post={post} />
-          </Link>
+        <Link key={post.id} href={`/post/${post.id}`}>
+          <Post post={post} />
+        </Link>
       ))}
       <div className="mt-8">
         <Pagination totalPages={1} />
