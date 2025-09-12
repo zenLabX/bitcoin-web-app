@@ -48,5 +48,12 @@
 ### next.config.ts
 next.js 的設定檔，將隨專案需求而有客製化設定，可能是 JS、CSS 的一些變異設定。
 
-### notes
+### frontend notes
 謹慎使用 `'use client';`，因為大量使用就少了 SSR 能發揮的優勢了。開發時可以思考哪些地方是可以用 server component 執行的。
+
+---
+
+## 資料庫服務
+
+### MongoDB Atlas
+將 MongoDB 資料庫部署在雲端的服務。
