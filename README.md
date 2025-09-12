@@ -13,6 +13,7 @@
 ### 🗂️ src/app 
 整個專案的入口
 - layout.tsx 整個 app 的入口 
+  - 屬於 server component
   - 頁面元件會更新在此頁上的 children，自動匹配路由
   - html head 的設定區
 - page.tsx 為 url 根目錄顯示的畫面
@@ -57,3 +58,10 @@ next.js 的設定檔，將隨專案需求而有客製化設定，可能是 JS、
 
 ### MongoDB Atlas
 將 MongoDB 資料庫部署在雲端的服務。
+
+---
+
+## React Query 在 Next.js 的使用方式
+
+✅ 「把 React Query Provider 包裝成 Client Component，再放進 Server Component 當 children」是 Next.js 官方建議的做法。
+可以同時享受 Server Component 的 SSR，又能在 Client Component 裡使用 hook 和 React Query。
