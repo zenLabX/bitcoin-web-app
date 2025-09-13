@@ -1,11 +1,14 @@
 "use client";
 
+import { addPost } from "@/services/post";
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 interface CommentEditorProps {
@@ -22,6 +25,44 @@ const CommentEditor = ({ isOpen, setIsOpen }: CommentEditorProps) => {
   };
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
+  };
+
+  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const currentPage = searchParams.get("page") || "1";
+  const router = useRouter();
+
+  const {
+    mutate: addPostMutate,
+    isPending,
+    isError,
+  } = useMutation({
+    mutationFn: addPost,
+    onSuccess: () => {
+      setIsOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["posts", "1"] });
+      setTitle("");
+      setContent("");
+
+      if (currentPage !== "1") {
+        router.push(`/?page=1`);
+      }
+    },
+  });
+
+  const onPost = () => {
+    if (isPending) return; //已經送過，不再送第二筆
+    if (!title || !content) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    if (isError) return;
+
+    addPostMutate({
+      title,
+      content,
+    });
   };
 
   return (
@@ -58,7 +99,8 @@ const CommentEditor = ({ isOpen, setIsOpen }: CommentEditorProps) => {
           </button>
           <button
             className="text-white font-bold cursor-pointer"
-            onClick={() => setIsOpen(false)}
+            onClick={onPost}
+            disabled={isPending}
           >
             Post
           </button>
