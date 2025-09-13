@@ -4,11 +4,13 @@ import { cookies } from "next/headers";
 export async function middleware(request: NextRequest) {
   //   const pathname = request.nextUrl.pathname;
 
+  //i18n設定，切換語系
   //   // Handle root path
   //   if (pathname === "/") {
   //     return NextResponse.redirect(new URL("/en", request.url));
   //   }
 
+  //cookie 身份驗證
   //   const cookieStore = await cookies();
   //   const accessToken = cookieStore.get("token")?.value;
   //   if (!accessToken) {
