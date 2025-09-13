@@ -64,4 +64,20 @@ next.js 的設定檔，將隨專案需求而有客製化設定，可能是 JS、
 ## React Query 在 Next.js 的使用方式
 
 ✅ 「把 React Query Provider 包裝成 Client Component，再放進 Server Component 當 children」是 Next.js 官方建議的做法。
-可以同時享受 Server Component 的 SSR，又能在 Client Component 裡使用 hook 和 React Query。
+可以同時具備 Server Component 的 SSR，又能在 Client Component 裡使用 hook 和 React Query。
+
+---
+### 常用的 React Query Hook
+| Hook               | 用途                            | 補充說明                                                                                   |
+| ------------------ | ----------------------------- | -------------------------------------------------------------------------------------- |
+| **useQuery**       | 拿資料 (GET API)                 | 主要用於「讀取資料」，自動管理 loading、error、cache。通常傳入一個 key 與 fetch function。                       |
+| **useMutation**    | 送資料 (POST / PUT / DELETE API) | 用於「修改資料」，不會自動更新 cache，需要搭配 `onSuccess` 或 `queryClient.invalidateQueries` 刷新資料。         |
+| **useQueryClient** | 操作或刷新快取                       | 取得全域 `QueryClient`，可以用 `invalidateQueries`、`setQueryData`、`refetchQueries` 等來手動控制資料更新。 |
+
+#### 額外小技巧
+
+1. GET API → 優先用 useQuery，避免自己管理 loading / error 狀態。
+
+2. POST / PUT / DELETE → 用 useMutation，操作成功後通常呼叫 queryClient.invalidateQueries 來刷新 GET 資料。
+
+3. 快取刷新 → useQueryClient + invalidateQueries 或 setQueryData 可以做到局部更新，提升效率。
